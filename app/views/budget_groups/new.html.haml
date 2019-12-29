@@ -1,7 +1,36 @@
-.new_form_group_page
+.new_budget_group_page
   =form_with model: @budget_group, local: true do |f|
     .form-group.form-group-title
       = f.label :title, "タイトル" ,class: "label label-title"
       = f.text_field :title, class: "form form-title", autocomplete:'off'
       .form-caution (最大50文字)
+      = f.label :color, "色" ,class: "label label-title"
+      = f.select :color, BudgetGroup::COLORS
     =f.submit "登録", class: 'btn btn-primary form-btn'
+.budget_content
+  -@budget_groups.each do |budget_group|
+    %table.table-bordered.budget_table
+      %thead
+        %tr
+          %th{style: "background-color: #{budget_group.color}"}= budget_group.title
+          %th 予定
+          %th 実費
+      %tbody
+        %tr
+          %td 卵代
+          %td 1000000円
+          %td 4000円
+        %tr
+          %td お肉代
+          %td 5000円
+          %td 4000円
+        %tr
+          %td 魚代
+          %td 2000円
+          %td 100円
+      %tfoot
+        %tr
+          %td 合計
+          %td 10000円
+          %td 8100円
+
