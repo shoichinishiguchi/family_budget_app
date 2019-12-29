@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_29_012509) do
+ActiveRecord::Schema.define(version: 2019_12_29_021957) do
 
   create_table "budget_amounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "budget_item_id"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_12_29_012509) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false, null: false
+    t.boolean "head_of_family", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["family_id"], name: "index_users_on_family_id"
   end

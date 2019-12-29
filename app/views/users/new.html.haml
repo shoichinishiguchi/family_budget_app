@@ -1,0 +1,27 @@
+.middle
+  .container
+    .login-form-groups
+      = form_with model: @user, local: true do |f|
+        -@user.errors.messages[:name].each do |message|
+          .form_error_message=message
+        .form-group
+          = f.label :name, '名前'
+          = f.text_field :name, class: 'form-control login-form', autocomplete:'off'
+        -@user.errors.messages[:email].each do |message|
+          .form_error_message=message
+        .form-group
+          = f.label :email, 'メールアドレス'
+          = f.text_field :email, class: 'form-control login-form', autocomplete:'off'
+        -if @user.errors.messages[:password] != []
+          .form_error_message パスワードを正しく登録してください。
+        .form-group
+          = f.label :password, 'パスワード'
+          = f.password_field :password, class: 'form-control login-form', autocomplete:'off'
+        .form-group
+          = f.label :password_confirmation, 'パスワード (確認)'
+          = f.password_field :password_confirmation, class: 'form-control login-form', autocomplete:'off'
+        .form-group
+          = f.fields_for @family, local: true do |d|
+            = d.label :name, '家族名'
+            = d.text_field :name, class: 'form-control login-form', autocomplete:'off'
+        = f.submit '登録', class: 'btn btn-primary login-btn'
