@@ -3,7 +3,8 @@
     .header__red
     .header__orange
     .header__yellow
-    .header__title= "#{family&.name}家の家計"
+    .header__title
+      =link_to "#{family&.name}家の家計", root_path
     .header__green
     .header__water_blue
     .header__blue

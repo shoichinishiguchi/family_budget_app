@@ -11,4 +11,5 @@
     .all-container
       -if flash.notice.present?
         .alert.alert-success= flash.notice
+    =render './shared/header', family: current_family
     = yield

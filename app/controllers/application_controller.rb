@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user
+  helper_method :current_family
   before_action :login_required
 
   private
@@ -8,8 +9,14 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
+  def current_family
+    @current_user&.family
+  end
+
   def login_required
-    redirect_to login_path unless current_user
+    unless current_user
+      redirect_to login_path, notice: "ログインまたは、新規登録をしてください。"
+    end
   end
 
 end
