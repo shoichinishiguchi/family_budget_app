@@ -1,12 +1,14 @@
 .new_budget_group_page
   =form_with model: @budget_group, local: true do |f|
     .form-group.form-group-title
-      = f.label :title, "タイトル" ,class: "label label-title"
+      = f.label :title, "グループ名" ,class: "label label-title"
       = f.text_field :title, class: "form form-title", autocomplete:'off'
-      .form-caution (最大50文字)
+      .form-caution (最大12文字)
       = f.label :color, "色" ,class: "label label-title"
       = f.select :color, BudgetGroup::COLORS
     =f.submit "登録", class: 'btn btn-primary form-btn'
+.budget_item_link
+  =link_to "項目の作成", new_budget_item_path, method: :get
 .budget_content
   -@budget_groups.each do |budget_group|
     %table.table-bordered.budget_table

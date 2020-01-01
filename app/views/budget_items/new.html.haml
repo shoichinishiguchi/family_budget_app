@@ -1,0 +1,13 @@
+.new_budget_item_page
+  =form_with model: @budget_item, local: true do |f|
+    .form-group.form-group-title
+      = f.label :title, "項目名" ,class: "label label-title"
+      = f.text_field :title, class: "form form-title", autocomplete:'off'
+      .form-caution (最大12文字)
+      = f.radio_button :income_flag, :false, class: "radio-btn"
+      = f.label :income_flag, "支出", {value: :false, style: "display: inline-block;"}
+      = f.radio_button :income_flag, :true, class: "radio-btn"
+      = f.label :income_flag, "収入", {value: :true, style: "display: inline-block;"}
+      .check_box
+        =collection_check_boxes(:budget_item, :budget_group_item_ids, current_family.budget_groups, :id, :title)
+    =f.submit "登録", class: 'btn btn-primary form-btn'

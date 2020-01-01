@@ -17,7 +17,6 @@ class FamiliesController < ApplicationController
   private
 
   def family_params
-    binding.pry
     params.require(:family).permit(:name)
   end
 

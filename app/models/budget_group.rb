@@ -3,7 +3,7 @@ class BudgetGroup < ApplicationRecord
   has_many :budget_items, through: :budget_group_item_ids
   belongs_to :family
 
-  validates :title, presence: { message: "項目名は必須です"}, length: {maximum: 8, message: "項目名は8文字以内でお願いします"}
+  validates :title, presence: { message: "項目名は必須です"}, length: {maximum: 12, message: "項目名は12文字以内でお願いします"}
 
   COLORS = [
     ["白", "white"],

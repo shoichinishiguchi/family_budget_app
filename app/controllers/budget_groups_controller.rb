@@ -13,6 +13,7 @@ class BudgetGroupsController < ApplicationController
     if @budget_group.save
       redirect_to new_budget_group_path, notice: "#{@budget_group.title}を作成しました"
     else
+      @budget_groups = current_family.budget_groups
       render :new
     end
   end
