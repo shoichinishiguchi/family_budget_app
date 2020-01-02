@@ -1,0 +1,20 @@
+.budget_content
+  -@budget_groups.each do |budget_group|
+    %table.table-bordered.budget_table
+      %thead
+        %tr
+          %th{style: "background-color: #{budget_group.color}"}= budget_group.title
+          %th 予定
+          %th 実費
+      %tbody
+        - budget_group.budget_items.each do |item|
+          %tr
+            %td= item.title
+            %td 1000000円
+            %td 4000円
+      %tfoot
+        %tr
+          %td 合計
+          %td 10000円
+          %td 8100円
+

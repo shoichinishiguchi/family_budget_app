@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   resources :families, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :budget_groups, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :budget_items, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :budget_amounts, only: [:create, :update]
   root 'budget_groups#index'
 end

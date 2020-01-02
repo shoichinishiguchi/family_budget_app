@@ -18,21 +18,25 @@
           %th 予定
           %th 実費
       %tbody
-        %tr
-          %td 卵代
-          %td 1000000円
-          %td 4000円
-        %tr
-          %td お肉代
-          %td 5000円
-          %td 4000円
-        %tr
-          %td 魚代
-          %td 2000円
-          %td 100円
+        - budget_group.budget_items.each do |item|
+          - budget_amount = item.amount_in(year: @year, month: @month) || BudgetAmount.new
+          %tr 
+            =form_with model: budget_amount do |f|
+              %td= item.title
+              %td
+                =f.number_field :amount_plan, class: "table_amount_field"
+                円
+              %td
+                =f.number_field :actual_amount, class: "table_amount_field"
+                円
+              %td
+                = f.hidden_field :year, value: @year
+                = f.hidden_field :month, value: @month
+                = f.hidden_field :budget_item_id, value: item.id
+                =f.submit "確定"
       %tfoot
         %tr
           %td 合計
-          %td 10000円
-          %td 8100円
+          %td= budget_group.budget_items.map{|item| item.amount_plan(year: @year, month: @month)}.inject(:+)
+          %td= budget_group.budget_items.map{|item| item.actual_amount(year: @year, month: @month)}.inject(:+)
 

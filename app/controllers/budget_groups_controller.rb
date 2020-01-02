@@ -1,11 +1,14 @@
 class BudgetGroupsController < ApplicationController
   def index
     @family = current_user&.family
+    @budget_groups = current_family.budget_groups.includes(:budget_items)
   end
 
   def new
     @budget_group = BudgetGroup.new
-    @budget_groups = current_family.budget_groups
+    @budget_groups = current_family.budget_groups.includes(budget_items: [:budget_amounts])
+    @year = params[:year] || Time.now.year
+    @month = params[:month] || Time.now.month
   end
 
   def create
