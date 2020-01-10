@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_01_141129) do
+ActiveRecord::Schema.define(version: 2020_01_03_085056) do
 
   create_table "budget_amounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "budget_item_id"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 2020_01_01_141129) do
     t.boolean "income_flag", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "family_id"
+    t.index ["family_id"], name: "index_budget_items_on_family_id"
   end
 
   create_table "families", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -69,4 +71,5 @@ ActiveRecord::Schema.define(version: 2020_01_01_141129) do
     t.index ["family_id"], name: "index_users_on_family_id"
   end
 
+  add_foreign_key "budget_items", "families"
 end

@@ -1,14 +1,29 @@
-.new_budget_group_page
-  =form_with model: @budget_group, local: true do |f|
-    .form-group.form-group-title
-      = f.label :title, "グループ名" ,class: "label label-title"
-      = f.text_field :title, class: "form form-title", autocomplete:'off'
-      .form-caution (最大12文字)
-      = f.label :color, "色" ,class: "label label-title"
-      = f.select :color, BudgetGroup::COLORS
-    =f.submit "登録", class: 'btn btn-primary form-btn'
-.budget_item_link
-  =link_to "項目の作成", new_budget_item_path, method: :get
+.flex-sparo
+  .new_budget_group_page
+    =form_with model: @budget_group, local: true do |f|
+      .form-group.form-group-title
+        = f.label :title, "グループ名" ,class: "label label-title"
+        = f.text_field :title, class: "form form-title", autocomplete:'off'
+        .form-caution (最大12文字)
+        = f.label :color, "色" ,class: "label label-title"
+        = f.select :color, BudgetGroup::COLORS
+        .check_box
+          =collection_check_boxes(:budget_group, :budget_group_item_ids, current_family.budget_items, :id, :title)
+      =f.submit "登録", class: 'btn btn-primary form-btn'
+  .new_budget_item_page
+    =form_with model: @budget_item, local: true do |f|
+      .form-group.form-group-title
+        = f.label :title, "項目名" ,class: "label label-title"
+        = f.text_field :title, class: "form form-title", autocomplete:'off'
+        .form-caution (最大12文字)
+        = f.radio_button :income_flag, :false, class: "radio-btn"
+        = f.label :income_flag, "支出", {value: :false, style: "display: inline-block;"}
+        = f.radio_button :income_flag, :true, class: "radio-btn"
+        = f.label :income_flag, "収入", {value: :true, style: "display: inline-block;"}
+        .check_box
+          =collection_check_boxes(:budget_item, :budget_group_item_ids, current_family.budget_groups, :id, :title)
+      =f.submit "登録", class: 'btn btn-primary form-btn'
+
 .budget_content
   -@budget_groups.each do |budget_group|
     %table.table-bordered.budget_table
@@ -33,10 +48,10 @@
                 = f.hidden_field :year, value: @year
                 = f.hidden_field :month, value: @month
                 = f.hidden_field :budget_item_id, value: item.id
-                =f.submit "確定"
+                =f.submit "確定", class: "btn btn-success table_amount_field_btn"
       %tfoot
         %tr
           %td 合計
-          %td= budget_group.budget_items.map{|item| item.amount_plan(year: @year, month: @month)}.inject(:+)
-          %td= budget_group.budget_items.map{|item| item.actual_amount(year: @year, month: @month)}.inject(:+)
+          %td= budget_group.budget_items.map{|item| item.amount_plan(year: @year, month: @month) || 0}.inject(:+)
+          %td= budget_group.budget_items.map{|item| item.actual_amount(year: @year, month: @month) || 0}.inject(:+)
 

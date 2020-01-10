@@ -5,12 +5,12 @@ class BudgetItemsController < ApplicationController
   end
 
   def create
-    @budget_item  = BudgetItem.new(budget_item_params)
+    @budget_item  = current_family.budget_items.new(budget_item_params)
     budget_group_ids.each do |budget_group_id|
       BudgetGroup.find(budget_group_id.to_i).budget_items << @budget_item
     end
     if @budget_item.save
-      redirect_to new_budget_item_path, notice: "#{@budget_item.title}を作成しました"
+      redirect_to new_budget_group_path, notice: "#{@budget_item.title}を作成しました"
     else
       render :new
     end
