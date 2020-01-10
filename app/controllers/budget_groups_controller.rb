@@ -15,7 +15,7 @@ class BudgetGroupsController < ApplicationController
 
   def create
     @budget_group = current_family.budget_groups.new(budget_group_params)
-    budget_item_ids.each do |budget_item_id|
+    budget_item_ids&.each do |budget_item_id|
       BudgetItem.find(budget_item_id.to_i).budget_groups << @budget_group
     end
 
@@ -40,7 +40,7 @@ class BudgetGroupsController < ApplicationController
   end
 
   def budget_item_ids
-    params.require(:budget_group)[:budget_group_item_ids].delete('')
+    params.require(:budget_group)[:budget_group_item_ids]&.delete('')
     params.require(:budget_group)[:budget_group_item_ids]
   end
 

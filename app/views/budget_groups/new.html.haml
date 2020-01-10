@@ -7,6 +7,8 @@
         .form-caution (最大12文字)
         = f.label :color, "色" ,class: "label label-title"
         = f.select :color, BudgetGroup::COLORS
+        .check_box
+          =collection_check_boxes(:budget_group, :budget_group_item_ids, current_family.budget_items.where(year: @year, month: @month), :id, :title)
       =f.submit "登録", class: 'btn btn-primary form-btn'
   .new_budget_item_page
     =form_with model: @budget_item, local: true do |f|
