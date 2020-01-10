@@ -10,19 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_085056) do
-
-  create_table "budget_amounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "budget_item_id"
-    t.integer "amount_plan"
-    t.integer "actual_amount"
-    t.integer "year"
-    t.integer "month"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "display_flag", default: true
-    t.index ["budget_item_id"], name: "index_budget_amounts_on_budget_item_id"
-  end
+ActiveRecord::Schema.define(version: 2020_01_10_142327) do
 
   create_table "budget_group_item_ids", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "budget_item_id"
@@ -35,7 +23,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_085056) do
 
   create_table "budget_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
-    t.boolean "sum_display_flag", default: false
+    t.boolean "balance_flag", default: false
     t.string "color"
     t.bigint "family_id"
     t.datetime "created_at", null: false
@@ -49,6 +37,11 @@ ActiveRecord::Schema.define(version: 2020_01_03_085056) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "family_id"
+    t.integer "amount_plan"
+    t.integer "actual_amount"
+    t.integer "month", null: false
+    t.integer "year", null: false
+    t.boolean "continue_next_mont_flag", default: false
     t.index ["family_id"], name: "index_budget_items_on_family_id"
   end
 
