@@ -7,7 +7,7 @@ class BudgetGroupsController < ApplicationController
 
   def new
     @budget_group = BudgetGroup.new
-    @budget_groups = current_family.budget_groups.includes({budget_items: [:budget_amounts]})
+    @budget_groups = current_family.budget_groups.includes(:budget_items)
     @year = params[:year] || Time.now.year
     @month = params[:month] || Time.now.month
     @budget_item = BudgetItem.new

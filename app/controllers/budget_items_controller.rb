@@ -16,6 +16,15 @@ class BudgetItemsController < ApplicationController
     end
   end
 
+  def update
+    budget_item = current_family.budget_items.find(params[:id])
+    if budget_item.update(budget_item_params)
+      redirect_to new_budget_group_path, notice: "#{budget_item.title}を更新しました"
+    else
+      render :new
+    end
+  end
+
   def show
   end
 
@@ -28,7 +37,7 @@ class BudgetItemsController < ApplicationController
   private
 
   def budget_item_params
-    params.require(:budget_item).permit(:title, :income_flag)
+    params.require(:budget_item).permit(:title, :income_flag, :year, :month, :continue_next_month_flag, :amount_plan, :actual_amount)
   end
 
   def budget_group_ids
