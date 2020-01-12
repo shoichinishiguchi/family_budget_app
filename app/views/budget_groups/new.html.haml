@@ -1,6 +1,9 @@
-.budget_month_year_chnage
-  =f.form_with model: @budget_item, local: true do |f|
-
+.month_year_change.flex-center
+  =link_to "<<", new_budget_group_path(month: prev_month(@month), year: prev_year(@year, @month))
+  .month_year_change__text
+    ="#{@year}年#{@month}月"
+  - if in_6_month_from_now?(@year, @month)
+    =link_to ">>", new_budget_group_path(month: next_month(@month), year: next_year(@year, @month))
 .flex-sparo
   .new_budget_group_page
     =form_with model: @budget_group, local: true do |f|
@@ -44,7 +47,7 @@
           %th 予定
           %th 実費
       %tbody
-        - budget_group.budget_items.each do |item|
+        - budget_group.budget_items.year_month(@year, @month).each do |item|
           %tr
             =form_with model: item do |f|
               = f.hidden_field :id, value: item.id

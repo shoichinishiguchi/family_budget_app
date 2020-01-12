@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 
   resources :families, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :budget_groups, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  resources :budget_items, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :budget_items, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    collection do
+      post 'next_month'
+    end
+  end
   root 'budget_groups#index'
 end

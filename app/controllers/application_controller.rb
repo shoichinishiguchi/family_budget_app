@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
   helper_method :current_user
   helper_method :current_family
   before_action :login_required
+
 
   private
 

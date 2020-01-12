@@ -4,5 +4,11 @@ class BudgetItem < ApplicationRecord
   belongs_to :family
   validates :title, presence: { message: "項目名は必須です"}, length: {maximum: 8, message: "項目名は8文字以内でお願いします"}
 
+  scope :year_month, ->(year, month){
+    where(year: year, month: month)
+  }
+  scope :continue_next_month, ->{
+    where(continue_next_month_flag: true)
+  }
 
 end
