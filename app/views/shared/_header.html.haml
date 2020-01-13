@@ -11,13 +11,13 @@
   .header__right
     - if current_user
       .header__new
-        =link_to "表の作成", new_budget_group_path, method: :get ,class: "header__new_link"
+        =link_to "表の作成", new_budget_group_path, method: :get ,class: "header__new_link mr8"
       .header__new
-        =link_to "家族の追加", edit_family_path(current_family)
+        =link_to "家族の追加", edit_family_path(current_family), class: "mr8"
       .header__logout
-        =link_to "ログアウト", logout_path, method: :delete ,class: "header__logout_link"
+        =link_to "ログアウト", logout_path, method: :delete ,class: "header__logout_link mr8"
     - else
       .header__login
-        =link_to "ログイン", login_path, method: :get ,class: "header__login_link"
+        =link_to "ログイン", login_path, method: :get ,class: "header__login_link mr8"
       .header__signup
-        =link_to "新規会員登録", new_user_path,class: "header__signup_link"
+        =link_to "新規会員登録", new_user_path,class: "header__signup_link mr8"
