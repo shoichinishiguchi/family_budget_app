@@ -39,7 +39,7 @@
       %thead
         %tr
           %th{style: "background-color: #{budget_group.color}"}
-            = budget_group.title
+            =link_to budget_group.title, edit_budget_group_path(budget_group), class: "show_link"
             - if budget_group.balance_flag
               %i.fas.fa-calculator{style:"color: #ff7927"}
           %th 予定
@@ -50,7 +50,7 @@
             =form_with model: item, local: true do |f|
               = f.hidden_field :id, value: item.id
               %td
-                = item.title
+                =link_to item.title, edit_budget_item_path(item), class: "show_link"
                 - if item.income_flag
                   %i.fas.fa-plus{style:"color: #414fcd"}
                 - if item.continue_next_month_flag

@@ -28,4 +28,8 @@ module ApplicationHelper
     Time.now.year * 12 + Time.now.month + 6 >= year*12 + month
   end
 
+  def comma(money)
+    money.to_s.reverse.gsub( /(\d{3})(?=\d)/, '\1,').reverse
+  end
+
 end

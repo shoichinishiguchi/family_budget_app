@@ -1,4 +1,5 @@
 class BudgetGroup < ApplicationRecord
+  include ApplicationHelper
   has_many :budget_group_item_ids, dependent: :destroy
   has_many :budget_items, through: :budget_group_item_ids
   belongs_to :family
@@ -16,10 +17,10 @@ class BudgetGroup < ApplicationRecord
   ]
 
   def plan_sum_in(year, month)
-    budget_items.year_month(year, month).map{|item| item.amount_plan || 0}.inject(:+)
+    comma(budget_items.year_month(year, month).map{|item| item.amount_plan || 0}.inject(:+))
   end
 
   def actual_sum_in(year, month)
-    budget_items.year_month(year, month).map{|item| item.actual_amount || 0}.inject(:+)
+    comma(budget_items.year_month(year, month).map{|item| item.actual_amount || 0}.inject(:+))
   end
 end
