@@ -1,0 +1,25 @@
+%h2 家族の編集
+=form_with model: current_family, local: true do |f|
+  %p= "家族名: #{current_family.name}"
+  .flex.pt8.pr8.pl8.pb8
+    %p 家族:
+    -current_family.users.each do |user|
+      %p="・"
+      - if user.head_of_family
+        %i.fas.fa-crown
+      %p="#{user.name}"
+  %p 家族の追加
+  = f.fields_for :user do |ff|
+    .form-group
+      = ff.label :name, "名前"
+      = ff.text_field :name, value: params[:name]
+    .form-group
+      = ff.label :email, 'メールアドレス'
+      = ff.text_field :email, class: 'form-control login-form', autocomplete:'off', value: params[:email]
+    .form-group
+      = ff.label :password, 'パスワード'
+      = ff.password_field :password, class: 'form-control login-form', autocomplete:'off'
+    .form-group
+      = ff.label :password_confirmation, 'パスワード (確認)'
+      = ff.password_field :password_confirmation, class: 'form-control login-form', autocomplete:'off'
+  =f.submit "家族の追加"

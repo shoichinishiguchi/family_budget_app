@@ -1,14 +1,12 @@
 class BudgetGroupsController < ApplicationController
+  before_action :set_year_month, only: [:index, :new]
+  before_action :set_budget_groups, only: [:index, :new]
 
   def index
-    @family = current_user&.family
-    @budget_groups = current_family.budget_groups.includes(:budget_items)
   end
 
   def new
     @budget_group = BudgetGroup.new
-    @budget_groups = current_family.budget_groups.includes(:budget_items)
-    set_year_month
     if params[:year] && params[:month]
       items_to_next_month(@year, @month).each do |item|
         next_item = current_family.budget_items.new(next_month_params(item))
@@ -48,6 +46,10 @@ class BudgetGroupsController < ApplicationController
 
   def budget_group_params
     params.require(:budget_group).permit(:title, :color)
+  end
+
+  def set_budget_groups
+    @budget_groups = current_family.budget_groups.includes(:budget_items)
   end
 
   def budget_item_ids

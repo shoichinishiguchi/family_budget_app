@@ -11,6 +11,12 @@
   display: flex;
   justify-content: center;
 }
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 @mixin flex {
   display: flex;
 }

@@ -2,6 +2,10 @@
 @import "bootstrap";
 @import "./variables/color";
 @import "./mixin/flex";
+@import "./mixin/margin";
+@import "./mixin/padding";
 @import "./modules/header";
 @import "./pages/new_budget";
 @import "./modules/budget_table";
+@import "font-awesome-sprockets";
+@import "font-awesome";

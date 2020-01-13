@@ -4,17 +4,20 @@
     .header__orange
     .header__yellow
     .header__title
-      =link_to "#{family&.name}家の家計", root_path
-    .header__green
+      =link_to "#{current_user&.family&.name}家の家計", root_path
+      %i.fas.fa-wallet{style:"color:#fd2e36"}
     .header__water_blue
     .header__blue
   .header__right
-    .header__new
-      =link_to "表の作成", new_budget_group_path, method: :get ,class: "header__new_link"
-    .header__login
-      =link_to "ログイン", login_path, method: :get ,class: "header__login_link"
-    .header__logout
-      =link_to "ログアウト", logout_path, method: :delete ,class: "header__logout_link"
-    .header__signup
-      =link_to "新規会員登録", new_user_path ,class: "header__signup_link"
-
+    - if current_user
+      .header__new
+        =link_to "表の作成", new_budget_group_path, method: :get ,class: "header__new_link"
+      .header__new
+        =link_to "家族の追加", edit_family_path(current_family)
+      .header__logout
+        =link_to "ログアウト", logout_path, method: :delete ,class: "header__logout_link"
+    - else
+      .header__login
+        =link_to "ログイン", login_path, method: :get ,class: "header__login_link"
+      .header__signup
+        =link_to "新規会員登録", new_user_path,class: "header__signup_link"

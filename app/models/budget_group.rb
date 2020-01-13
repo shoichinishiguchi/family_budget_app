@@ -14,4 +14,12 @@ class BudgetGroup < ApplicationRecord
     ["水色", "#1688fa"],
     ["青", "#414fcd"],
   ]
+
+  def plan_sum_in(year, month)
+    budget_items.year_month(year, month).map{|item| item.amount_plan || 0}.inject(:+)
+  end
+
+  def actual_sum_in(year, month)
+    budget_items.year_month(year, month).map{|item| item.actual_amount || 0}.inject(:+)
+  end
 end

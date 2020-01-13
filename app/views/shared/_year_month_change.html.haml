@@ -1,0 +1,6 @@
+.month_year_change.flex-center
+  =link_to "<<", "#{request.path}?month=#{prev_month(month)}&year=#{prev_year(year,month)}"
+  .month_year_change__text
+    ="#{year}年#{month}月"
+  - if in_6_month_from_now?(year, month)
+    =link_to ">>", "#{request.path}?month=#{next_month(month)}&year=#{next_year(year,month)}"

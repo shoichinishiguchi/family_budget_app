@@ -1,9 +1,4 @@
-.month_year_change.flex-center
-  =link_to "<<", new_budget_group_path(month: prev_month(@month), year: prev_year(@year, @month))
-  .month_year_change__text
-    ="#{@year}年#{@month}月"
-  - if in_6_month_from_now?(@year, @month)
-    =link_to ">>", new_budget_group_path(month: next_month(@month), year: next_year(@year, @month))
+=render 'shared/year_month_change', year: @year, month: @month
 .flex-sparo
   .new_budget_group_page
     =form_with model: @budget_group, local: true do |f|
@@ -38,12 +33,15 @@
         = f.hidden_field :month, value: @month
       =f.submit "登録", class: 'btn btn-primary form-btn'
 
-.budget_content
+.flex-wrap
   -@budget_groups.each do |budget_group|
     %table.table-bordered.budget_table
       %thead
         %tr
-          %th{style: "background-color: #{budget_group.color}"}= budget_group.title
+          %th{style: "background-color: #{budget_group.color}"}
+            = budget_group.title
+            - if budget_group.balance_flag
+              %i.fas.fa-calculator{style:"color: #ff7927"}
           %th 予定
           %th 実費
       %tbody
@@ -51,7 +49,12 @@
           %tr
             =form_with model: item do |f|
               = f.hidden_field :id, value: item.id
-              %td= item.title
+              %td
+                = item.title
+                - if item.income_flag
+                  %i.fas.fa-plus{style:"color: #414fcd"}
+                - if item.continue_next_month_flag
+                  %i.fas.fa-redo-alt{style:"color: #a0db35"}
               %td
                 =f.number_field :amount_plan, class: "table_amount_field"
                 円
@@ -60,8 +63,9 @@
                 円
               %td
                 =f.submit "確定", class: "btn btn-success table_amount_field_btn"
-      %tfoot
-        %tr
-          %td 合計
-          %td= budget_group.budget_items.where(year: @year, month: @month).map{|item| item.amount_plan || 0}.inject(:+)
-          %td= budget_group.budget_items.where(year: @year, month: @month).map{|item| item.actual_amount || 0}.inject(:+)
+      -if budget_group.budget_items.year_month(@year, @month).size != 0
+        %tfoot
+          %tr
+            %td 合計
+            %td= "#{budget_group.plan_sum_in(@year,@month)}円"
+            %td= "#{budget_group.actual_sum_in(@year,@month)}円"

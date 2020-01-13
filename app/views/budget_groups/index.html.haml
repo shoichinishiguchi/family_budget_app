@@ -1,20 +1,30 @@
-.budget_content
+=render 'shared/year_month_change', year: @year, month: @month
+.flex-wrap
   -@budget_groups.each do |budget_group|
     %table.table-bordered.budget_table
       %thead
         %tr
-          %th{style: "background-color: #{budget_group.color}"}= budget_group.title
+          %th{style: "background-color: #{budget_group.color}"}
+            = budget_group.title
+            - if budget_group.balance_flag
+              %i.fas.fa-calculator{style:"color: #ff7927"}
+
           %th 予定
           %th 実費
       %tbody
-        - budget_group.budget_items.each do |item|
+        - budget_group.budget_items.year_month(@year, @month).each do |item|
           %tr
-            %td= item.title
-            %td 1000000円
-            %td 4000円
-      %tfoot
-        %tr
-          %td 合計
-          %td 10000円
-          %td 8100円
-
+            %td
+              = item.title
+              - if item.income_flag
+                %i.fas.fa-plus{style:"color: #414fcd"}
+              - if item.continue_next_month_flag
+                %i.fas.fa-redo-alt{style:"color: #a0db35"}
+            %td= "#{item.amount_plan.to_s + '円' if item.amount_plan}"
+            %td= "#{item.actual_amount.to_s + '円' if item.actual_amount}"
+      -if budget_group.budget_items.year_month(@year, @month).size != 0
+        %tfoot
+          %tr
+            %td 合計
+            %td= "#{budget_group.plan_sum_in(@year,@month)}円"
+            %td= "#{budget_group.actual_sum_in(@year,@month)}円"
