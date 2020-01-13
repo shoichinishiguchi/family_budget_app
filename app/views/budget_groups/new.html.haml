@@ -47,7 +47,7 @@
       %tbody
         - budget_group.budget_items.year_month(@year, @month).each do |item|
           %tr
-            =form_with model: item do |f|
+            =form_with model: item, local: true do |f|
               = f.hidden_field :id, value: item.id
               %td
                 = item.title
