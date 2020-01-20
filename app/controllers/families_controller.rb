@@ -25,7 +25,7 @@ class FamiliesController < ApplicationController
     if @user.save
       redirect_to edit_family_path(current_family), notice: "#{@user.name}を追加しました"
     else
-      redirect_to edit_family_path(current_family, name: family_user_params[:name], email: family_user_params[:email]), notice: "#{@user.name}の追加に失敗しました。"
+      redirect_to edit_family_path(current_family), notice: "#{@user.name}の追加に失敗しました。"
     end
   end
 

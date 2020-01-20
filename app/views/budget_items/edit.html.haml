@@ -1,2 +1,44 @@
-%h1 BudgetItems#edit
-%p Find me in app/views/budget_items/edit.html.haml
+.padding32
+  %h1 編集画面
+  =form_with model: @budget_item, local: true do |f|
+    .form_group
+      =f.label :title, 'タイトル'
+      =f.text_field :title
+    .form_group
+      =f.label :amount_plan, '予算'
+      =f.number_field :amount_plan
+      =f.label :amount_plan, '円'
+    .form_group
+      =f.label :actual_amount, '実費'
+      =f.number_field :actual_amount
+      =f.label :actual_amount, '円'
+    .form_group
+      = f.label :year, "日付"
+      = f.select :year, (Time.now.year - 2..Time.now.year + 5)
+      = f.label :year, "年"
+      = f.select :month, (1..12)
+      = f.label :month, "月"
+      = f.select :day, (1..31)
+      = f.label :day, "日"
+    .radio_button
+      = f.radio_button :income_flag, :false, class: "radio-btn"
+      = f.label :income_flag, "支出", { style: "display: inline-block;"}
+      = f.radio_button :income_flag, :true, class: "radio-btn"
+      = f.label :income_flag, "収入", { style: "display: inline-block;"}
+    .radio_button
+      = f.radio_button :continue_next_month_flag, :false, class: "radio-btn"
+      = f.label :continue_next_month_flag, "今月のみ", {style: "display: inline-block;"}
+      = f.radio_button :continue_next_month_flag, :true, class: "radio-btn"
+      = f.label :continue_next_month_flag, "毎月", { style: "display: inline-block;"}
+    =collection_check_boxes(:budget_item, :budget_group_item_ids, current_family.budget_groups, :id, :title)
+    .wrap{style:"margin-top:20px"}
+      - groups = @budget_item.budget_groups
+      - groups.each do |group|
+        =f.label "group_#{group.id}".to_sym, group.title
+        =f.check_box("group_#{group.id}".to_sym, {checked: "checked"}, true, false)
+      - (current_family.budget_groups - groups).each do |group|
+        =f.label "group_#{group.id}".to_sym, group.title
+        =f.check_box("group_#{group.id}".to_sym, {}, true, false)
+
+    .submit
+      =f.submit "登録", class: 'btn btn-primary form-btn'
