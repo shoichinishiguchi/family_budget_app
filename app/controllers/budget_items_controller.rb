@@ -19,10 +19,8 @@ class BudgetItemsController < ApplicationController
   def update
     budget_item = current_family.budget_items.find(params[:id])
     budget_item.budget_group_item_ids.destroy_all
-    budget_group_ids.each do |budget_group_id|
-      BudgetGroup.find(budget_group_id.to_i).budget_items << budget_item
-    end
-    if budget_item.update(budget_item_params)
+    update_groups_belonging_to(budget_item)
+     if budget_item.update(budget_item_params)
       redirect_to edit_budget_item_path, notice: "#{budget_item.title}を更新しました"
     else
       render:edit
@@ -52,6 +50,18 @@ class BudgetItemsController < ApplicationController
 
   def set_budget_item
     @budget_item = current_family.budget_items.find(params[:id])
+  end
+
+  def budget_group_params_id_exist_flag(i)
+    params.require(:budget_item).permit("group_#{i}".to_sym)["group_#{i}".to_sym]
+  end
+
+  def update_groups_belonging_to(budget_item)
+    current_family.budget_groups.pluck(:id).each do |i|
+      if budget_group_params_id_exist_flag(i)
+        current_family.budget_groups.find(i).budget_items << budget_item
+      end
+    end
   end
 
 end

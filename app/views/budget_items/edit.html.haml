@@ -30,8 +30,7 @@
       = f.label :continue_next_month_flag, "今月のみ", {style: "display: inline-block;"}
       = f.radio_button :continue_next_month_flag, :true, class: "radio-btn"
       = f.label :continue_next_month_flag, "毎月", { style: "display: inline-block;"}
-    =collection_check_boxes(:budget_item, :budget_group_item_ids, current_family.budget_groups, :id, :title)
-    .wrap{style:"margin-top:20px"}
+    .budget_groups_checkbox
       - groups = @budget_item.budget_groups
       - groups.each do |group|
         =f.label "group_#{group.id}".to_sym, group.title
